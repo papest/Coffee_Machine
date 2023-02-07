@@ -1,13 +1,16 @@
 package machine
 
+const val WATER_PER_CUP = 200
+const val MILK_PER_CUP = 50
+const val COFFEE_BEANS_PER_CUP = 15
+
 fun main() {
+    println("Write how many cups of coffee you will need:")
+    val cups = readln().toInt()
     println(
-        """Starting to make a coffee
-Grinding coffee beans
-Boiling water
-Mixing boiled water with crushed coffee beans
-Pouring coffee into the cup
-Pouring some milk into the cup
-Coffee is ready!"""
+        """For $cups cups of coffee you will need:
+${cups * WATER_PER_CUP} ml of water
+${cups * MILK_PER_CUP} ml of milk
+${cups * COFFEE_BEANS_PER_CUP} g of coffee beans"""
     )
 }
