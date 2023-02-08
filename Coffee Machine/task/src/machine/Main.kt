@@ -26,18 +26,39 @@ $$money of money"""
     )
 }
 
+fun checkSupplies(choice: Int): String {
+
+    if (coffee[choice - 1][WATER_INDEX] > water) return "water"
+    if (coffee[choice - 1][MILK_INDEX] > milk) return "milk"
+    if (coffee[choice - 1][COFFEE_BEANS_INDEX] > coffeeBeans) return "coffee beans"
+    return "OK"
+
+}
+
 fun buy() {
-    println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino:")
-    val choice = readln().toInt()
+
+    println("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:")
+    val readString = readln()
+    if (readString == "back") {
+        return
+    }
+    val choice = readString.toInt()
+    val checkSupplies = checkSupplies(choice)
+    if (checkSupplies !== "OK") {
+        println("Sorry, not enough $checkSupplies!")
+        return
+    }
     water -= coffee[choice - 1][WATER_INDEX]
     milk -= coffee[choice - 1][MILK_INDEX]
     coffeeBeans -= coffee[choice - 1][COFFEE_BEANS_INDEX]
     disposableCups--
     money += coffee[choice - 1][MONEY_INDEX]
+    println("I have enough resources, making you a coffee!")
 
 }
 
 fun fill() {
+
     println("Write how many ml of water you want to add:")
     water += readln().toInt()
     println("Write how many ml of milk you want to add:")
@@ -50,19 +71,29 @@ fun fill() {
 }
 
 fun take() {
+
     println("I gave you $$money")
     money = 0
 
 }
 
-fun main() {
-    printCoffeeMachineState()
-    println("Write action (buy, fill, take):")
-    when (readln()) {
-        "buy" -> buy()
-        "fill" -> fill()
-        "take" -> take()
+fun menu() {
+
+    while (true) {
+
+        println("Write action (buy, fill, take, remaining, exit):")
+        when (readln()) {
+            "buy" -> buy()
+            "fill" -> fill()
+            "take" -> take()
+            "remaining" -> printCoffeeMachineState()
+            "exit" -> return
+        }
     }
-    printCoffeeMachineState()
+}
+
+fun main() {
+
+    menu()
 
 }
